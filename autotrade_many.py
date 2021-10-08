@@ -6,7 +6,7 @@ access = "lJgmfUdvkRffmPvzGDZLxibbDiSbAui6nLftZmUS"
 secret = "YRsinVz3K5ta0JmnoR6nrshO2UcxlxRm4QNUA2ZX"
 
 def get_target_price(ticker, k):
-    """변동성 돌파 전략으로 매수 목표가 조회"""
+    """get target price by Break through volatility"""
     df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
     target_price = df.iloc[0]['close'] + (df.iloc[0]['high'] - df.iloc[0]['low']) * k
     return target_price
@@ -18,13 +18,13 @@ def get_ma(ticker, k):
 
 
 def get_start_time(ticker):
-    """시작 시간 조회"""
+    """get start time"""
     df = pyupbit.get_ohlcv(ticker, interval="day", count=1)
     start_time = df.index[0]
     return start_time
 
 def get_balance(ticker):
-    """잔고 조회"""
+    """cheak money"""
     balances = upbit.get_balances()
     for b in balances:
         if b['currency'] == ticker:
@@ -35,10 +35,10 @@ def get_balance(ticker):
     return 0
 
 def get_current_price(ticker):
-    """현재가 조회"""
+    """check current price"""
     return pyupbit.get_orderbook(tickers=ticker)[0]["orderbook_units"][0]["ask_price"]
 
-# 로그인
+# LOGIN
 upbit = pyupbit.Upbit(access, secret)
 print("autotrade start")
 
@@ -50,7 +50,7 @@ coin_list = ['KRW-XTZ', 'KRW-QTUM','KRW-MTL','KRW-ADA','KRW-SRM','KRW-EOS','KRW-
 
 
 
-# 자동매매 시작
+# Start autotrade
 while True:
     try:
         now = datetime.datetime.now()
