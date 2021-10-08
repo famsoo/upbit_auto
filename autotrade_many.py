@@ -57,13 +57,12 @@ while True:
         start_time = get_start_time("KRW-BTC")
         for C in coin_list:
             end_time = start_time + datetime.timedelta(days=1)
+            target_price = get_target_price(C, 0.5)
+            current_price = get_current_price(C)
+            ma_price = get_ma(C,10)
+            #volume = get_balance("BTC")
+            Vol = upbit.get_balance(C)
             if start_time < now < end_time - datetime.timedelta(seconds=10):
-                target_price = get_target_price(C, 0.5)
-                current_price = get_current_price(C)
-                ma_price = get_ma(C,10)
-                #volume = get_balance("BTC")
-                Vol = upbit.get_balance(C)
-                
                 if target_price < current_price and ma_price < current_price and hold is False:
                     krw = get_balance("KRW")
                     if krw > 5000:
